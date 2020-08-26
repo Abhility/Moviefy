@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, View, Text, StatusBar} from 'react-native';
-import BottomTabs from './navigations/BottomTabs';
+import DrawerNavigation from './navigations/DrawerNavigation';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import Header from './components/Header';
 import * as Animatable from 'react-native-animatable';
 import LoadingScreen from './screens/LoadingScreen';
 
@@ -20,16 +19,20 @@ const theme = {
 const App = () => {
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => setLoading(false), 3000);
+  setTimeout(() => setLoading(false), 2000);
 
   return (
     <PaperProvider theme={theme}>
       <StatusBar backgroundColor={theme.colors.other} />
       {!loading ? (
-        <Animatable.View animation="slideInUp" duration={500} style={{flex: 1}}>
-          <Header title="Moviefy" />
-          <BottomTabs />
-        </Animatable.View>
+        <>
+          <Animatable.View
+            animation="slideInUp"
+            duration={500}
+            style={{flex: 1}}>
+            <DrawerNavigation />
+          </Animatable.View>
+        </>
       ) : (
         <LoadingScreen />
       )}

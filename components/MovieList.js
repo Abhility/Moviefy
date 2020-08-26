@@ -7,7 +7,7 @@ const MovieList = ({movies}) => {
   return (
     <Animatable.View animation="fadeInDownBig">
       <FlatList
-        style={{width: '90%', marginTop: 10, alignSelf: 'center'}}
+        style={{width: '90%', marginTop: 5, alignSelf: 'center'}}
         data={movies}
         renderItem={(movie) => <Movie movie={movie} />}
         keyExtractor={(movie) => movie.id.toString()}

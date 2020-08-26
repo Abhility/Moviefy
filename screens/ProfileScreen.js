@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Modal, TextInput, IconButton, Button} from 'react-native-paper';
 import Header from '../components/Header';
 import * as Animatable from 'react-native-animatable';
+import {Text, TouchableOpacity} from 'react-native';
+import {Button} from 'react-native-paper';
 
-const SearchScreen = ({navigation}) => {
+const ProfileScreen = ({navigation}) => {
   return (
     <>
       <Header title="Moviefy" navigation={navigation} />
@@ -19,11 +19,12 @@ const SearchScreen = ({navigation}) => {
         <Text style={{fontSize: 25, marginBottom: 20}}>Coming soon...</Text>
         <TouchableOpacity>
           <Button
-            style={{fontSize: 25}}
+            mode="contained"
+            tyle={{fontSize: 25}}
             onPress={() => {
-              navigation.jumpTo('explore');
+              navigation.navigate('explore');
             }}>
-            Explore
+            Home
           </Button>
         </TouchableOpacity>
       </Animatable.View>
@@ -31,4 +32,4 @@ const SearchScreen = ({navigation}) => {
   );
 };
 
-export default SearchScreen;
+export default ProfileScreen;

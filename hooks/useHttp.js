@@ -1,5 +1,3 @@
-import React from 'react';
-
 const useHttp = async (url, method, body) => {
   try {
     let response = await fetch(url, {

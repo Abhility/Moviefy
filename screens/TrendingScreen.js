@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {ProgressBar} from 'react-native-paper';
 import useHttp from '../hooks/useHttp';
+import Header from '../components/Header';
 import MovieList from '../components/MovieList';
 
-const TrendingScreen = () => {
-  const API_URL = 'https://movieinfo.glitch.me/movie-info/trending';
-  // const API_URL = 'https://abhility-fakedb.glitch.me/todos';
+const TrendingScreen = ({navigation}) => {
+  const API_URL = 'https://moviefy.glitch.me/movie-info/trending';
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,7 @@ const TrendingScreen = () => {
 
   return (
     <>
+      <Header title="Moviefy" navigation={navigation} />
       {loading ? (
         <ProgressBar
           indeterminate={true}
