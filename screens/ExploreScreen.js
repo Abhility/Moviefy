@@ -2,7 +2,7 @@ import React, {useState, useEffect, useReducer} from 'react';
 import Header from '../components/Header';
 import {ScrollView, Text, View} from 'react-native';
 import {Chip, ProgressBar} from 'react-native-paper';
-import useHttp from '../hooks/useHttp';
+import {httpRequest} from '../helpers/httpClient';
 import MovieList from '../components/MovieList';
 import * as Animatable from 'react-native-animatable';
 
@@ -74,13 +74,15 @@ const HomeScreen = ({navigation}) => {
   const fetchData = async () => {
     dispatch({type: 'FETCHING'});
     try {
-      let movies = await useHttp(API_URL, 'GET', null);
-      movies = movies.map((movie) => {
-        return {
-          ...movie,
-          poster_path: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
-        };
-      });
+      let movies = await httpRequest(API_URL, 'GET', null);
+      movies = movies
+        .filter((movie) => movie.poster_path !== null)
+        .map((movie) => {
+          return {
+            ...movie,
+            poster_path: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+          };
+        });
       dispatch({type: 'DATA_FETCHED', movies});
     } catch (err) {
       console.log(err);
@@ -106,16 +108,24 @@ const HomeScreen = ({navigation}) => {
       <Header title="Moviefy" navigation={navigation} />
       <View style={{flex: 1}}>
         <Animatable.View animation="fadeInRight" delay={1000}>
-          <ScrollView horizontal={true} style={{padding: 10}}>
+          <ScrollView
+            horizontal={true}
+            style={{
+              paddingHorizontal: 5,
+              paddingVertical: 10,
+            }}>
             {genres.map((genre) => (
               <Chip
                 selected={genre.selected}
+                icon={genre.selected ? 'check-all' : 'movie-outline'}
+                mode="outlined"
+                selectedColor={genre.selected ? 'white' : 'black'}
                 key={genre.id}
-                selectedColor="#1E35A9"
                 style={{
                   fontSize: 25,
                   flex: 1,
-                  marginHorizontal: 5,
+                  marginHorizontal: 3,
+                  backgroundColor: genre.selected ? '#1E35A9' : 'white',
                 }}
                 onPress={handleSelection.bind(null, genre)}>
                 {genre.name}
@@ -129,7 +139,7 @@ const HomeScreen = ({navigation}) => {
           ) : state.error ? (
             <Text>Some error occured!</Text>
           ) : (
-            <MovieList movies={state.movies} />
+            <MovieList movies={state.movies} navigation={navigation} />
           )}
         </View>
       </View>

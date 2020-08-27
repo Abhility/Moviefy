@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ProgressBar} from 'react-native-paper';
-import useHttp from '../hooks/useHttp';
+import {httpRequest} from '../helpers/httpClient';
 import Header from '../components/Header';
 import MovieList from '../components/MovieList';
 
@@ -13,7 +13,7 @@ const TrendingScreen = ({navigation}) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      let movies = await useHttp(API_URL, 'GET', null);
+      let movies = await httpRequest(API_URL, 'GET', null);
       movies = movies.map((movie) => {
         return {
           ...movie,
@@ -36,11 +36,9 @@ const TrendingScreen = ({navigation}) => {
     <>
       <Header title="Moviefy" navigation={navigation} />
       {loading ? (
-        <ProgressBar
-          indeterminate={true}
-          style={{alignSelf: 'center'}}></ProgressBar>
+        <ProgressBar indeterminate={true}></ProgressBar>
       ) : (
-        <MovieList movies={movies} />
+        <MovieList movies={movies} navigation={navigation} />
       )}
     </>
   );

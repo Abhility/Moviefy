@@ -3,24 +3,19 @@ import {View, Text, StyleSheet, ToastAndroid} from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer, Avatar, Title, Caption, Paragraph} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as Animatable from 'react-native-animatable';
 
 const DrawerContent = (props) => {
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
-        <Animatable.View animation="slideInRight" style={styles.userData}>
+        <View animation="slideInRight" style={styles.userData}>
           <Avatar.Image size={80} source={require('../assests/person.png')} />
           <View>
             <Title>User</Title>
             <Caption>user@moviefy.com</Caption>
           </View>
-        </Animatable.View>
-        <Animatable.View animation="slideInLeft" style={styles.userInfo}>
-          <Title>15</Title>
-          <Caption style={{marginLeft: 10}}>Movies in watchlist</Caption>
-        </Animatable.View>
-        <Animatable.View animation="slideInLeft" style={styles.menu}>
+        </View>
+        <View animation="slideInLeft" style={styles.menu}>
           <Drawer.Item
             icon={({color, size}) => (
               <Icon name="home-outline" color={color} size={size} />
@@ -48,7 +43,7 @@ const DrawerContent = (props) => {
               ToastAndroid.show('Not available yet!', ToastAndroid.BOTTOM);
             }}
           />
-        </Animatable.View>
+        </View>
       </DrawerContentScrollView>
       <Drawer.Section>
         <Drawer.Item
@@ -86,13 +81,6 @@ const styles = StyleSheet.create({
     flex: 2,
     marginTop: 30,
     justifyContent: 'space-evenly',
-  },
-  userInfo: {
-    flexDirection: 'row',
-    marginLeft: 15,
-    marginTop: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

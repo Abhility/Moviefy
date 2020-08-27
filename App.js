@@ -27,7 +27,7 @@ const App = () => {
       {!loading ? (
         <>
           <Animatable.View
-            animation="slideInUp"
+            animation="slideInDown"
             duration={500}
             style={{flex: 1}}>
             <DrawerNavigation />

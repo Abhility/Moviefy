@@ -1,46 +1,67 @@
 import React from 'react';
 import {Button, Card, IconButton} from 'react-native-paper';
-import {StyleSheet, TouchableOpacity, Text, ToastAndroid} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Rating from './Rating';
 
-const pressHandler = () => {
-  ToastAndroid.showWithGravity(
-    'Coming Soon!',
-    ToastAndroid.SHORT,
-    ToastAndroid.BOTTOM,
-  );
-};
-const Movie = ({movie}) => {
-  const rating = Math.round(movie.item.vote_average * 0.5);
-  const stars = [];
-  for (let i = 0; i < rating; i++) {
-    stars.push(<Icon color="#CFAE29" name="star" size={25} key={i} />);
-  }
+const Movie = ({movie, navigation}) => {
+  const detailsPressHandler = () => {
+    navigation.navigate('Details', {
+      movieId: movie.item.id,
+      name: movie.item.title,
+    });
+  };
   return (
     <Card style={styles.card}>
       <Card.Cover
-        style={styles.cover}
         source={{
           uri: movie.item.poster_path,
         }}
-        resizeMode="center"
+        resizeMode="cover"
+        resizeMethod="scale"
+        style={{backgroundColor: '#E2E3E4'}}
       />
       <Card.Title
         title={movie.item.title}
         subtitle={`Release date - ${movie.item.release_date}`}
       />
-      <Card.Content style={{flexDirection: 'row'}}>{[...stars]}</Card.Content>
-      <Card.Actions>
-        <TouchableOpacity>
-          <Button onPress={pressHandler}>View</Button>
-        </TouchableOpacity>
+      <Card.Content style={styles.content}>
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <Rating votes={movie.item.vote_average} />
+        </View>
         <TouchableOpacity>
           <IconButton
-            onPress={pressHandler}
+            onPress={() =>
+              ToastAndroid.showWithGravity(
+                'Coming Soon!',
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM,
+              )
+            }
             icon="bookmark-plus"
             color="#1E35A9"
+            size={45}
           />
         </TouchableOpacity>
+      </Card.Content>
+      <Card.Actions style={styles.actions}>
+        <View style={{flex: 1}}>
+          <TouchableOpacity>
+            <Button
+              mode="contained"
+              icon="tag-multiple"
+              style={{borderRadius: 20}}
+              onPress={detailsPressHandler}>
+              Details
+            </Button>
+          </TouchableOpacity>
+        </View>
       </Card.Actions>
     </Card>
   );
@@ -48,15 +69,19 @@ const Movie = ({movie}) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '90%',
-    elevation: 8,
+    width: '100%',
+    padding: 5,
     alignSelf: 'center',
-    marginBottom: 20,
-    borderRadius: 30,
+    marginBottom: 5,
   },
-  cover: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+  content: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  actions: {
+    flex: 1,
+    flexDirection: 'row',
   },
 });
 
