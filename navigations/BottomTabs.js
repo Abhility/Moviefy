@@ -5,13 +5,14 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import SearchScreen from '../screens/SearchScreen';
 import ExploreScreen from '../screens/ExploreScreen';
 import TrendingScreen from '../screens/TrendingScreen';
+import {colors} from '../helpers/constants';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomTabs() {
   return (
     <Tab.Navigator
-      barStyle={{backgroundColor: '#1E35A9'}}
+      barStyle={{backgroundColor: colors.primary}}
       initialRouteName="home">
       <Tab.Screen
         name="explore"

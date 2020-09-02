@@ -3,7 +3,7 @@ import {Text, View, FlatList, Image} from 'react-native';
 import {Card, Title} from 'react-native-paper';
 import {httpRequest} from '../helpers/httpClient';
 import * as Animatable from 'react-native-animatable';
-import YouTube from 'react-native-youtube';
+import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const MovieVideosScreen = ({route}) => {
@@ -51,10 +51,12 @@ const MovieVideosScreen = ({route}) => {
                 <Card
                   style={{paddingHorizontal: 3, marginBottom: 10}}
                   elevation={4}>
-                  <YouTube
-                    videoId={video.item.key}
-                    apiKey="AIzaSyCyoDa4QajAQZ7j_aJ7JypYs1qT5Ex3I5M"
+                  <WebView
                     style={{alignSelf: 'stretch', height: 300}}
+                    javaScriptEnabled={true}
+                    source={{
+                      uri: `https://www.youtube.com/embed/${video.item.key}`,
+                    }}
                   />
                   <Card.Title
                     style={{alignSelf: 'center'}}

@@ -15,11 +15,9 @@ const ProfileScreen = ({navigation}) => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        {/* <TextInput label="Search here" value="" mode="outlined" /> */}
         <Text style={{fontSize: 25, marginBottom: 20}}>Coming soon...</Text>
         <TouchableOpacity>
           <Button
-            mode="contained"
             tyle={{fontSize: 25}}
             onPress={() => {
               navigation.navigate('explore');

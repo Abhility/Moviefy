@@ -1,13 +1,11 @@
 import React from 'react';
 import {Chip} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
+import {colors} from '../helpers/constants';
 
 const Genres = ({genres}) => {
   return (
-    <Animatable.View
-      animation="slideInLeft"
-      delay={2000}
-      style={{flexDirection: 'row'}}>
+    <Animatable.View animation="slideInLeft" style={{flexDirection: 'row'}}>
       {genres.map((genre) => (
         <Chip
           key={genre.id}
@@ -17,7 +15,7 @@ const Genres = ({genres}) => {
             fontSize: 25,
             marginHorizontal: 3,
 
-            backgroundColor: '#1E35A9',
+            backgroundColor: colors.primary,
           }}>
           {genre.name}
         </Chip>

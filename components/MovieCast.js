@@ -49,7 +49,7 @@ const MovieCast = ({movieId}) => {
           source={require('../assests/spinner.gif')}
         />
       ) : (
-        <>
+        <Animatable.View animation="slideInRight" delay={2000}>
           <Title
             style={{
               alignSelf: 'center',
@@ -58,21 +58,19 @@ const MovieCast = ({movieId}) => {
             }}>
             Cast
           </Title>
-          <Animatable.View animation="slideInRight" delay={2000}>
-            <ScrollView horizontal={true} style={styles.cast}>
-              {cast.map((actor) => (
-                <View style={styles.actor} key={actor.cast_id}>
-                  <Avatar.Image
-                    source={{uri: actor.profile_path}}
-                    style={{
-                      backgroundColor: 'white',
-                    }}></Avatar.Image>
-                  <Title>{actor.name.split(' ')[0]}</Title>
-                </View>
-              ))}
-            </ScrollView>
-          </Animatable.View>
-        </>
+          <ScrollView horizontal={true} style={styles.cast}>
+            {cast.map((actor) => (
+              <View style={styles.actor} key={actor.cast_id}>
+                <Avatar.Image
+                  source={{uri: actor.profile_path}}
+                  style={{
+                    backgroundColor: 'white',
+                  }}></Avatar.Image>
+                <Title>{actor.name.split(' ')[0]}</Title>
+              </View>
+            ))}
+          </ScrollView>
+        </Animatable.View>
       )}
     </>
   );

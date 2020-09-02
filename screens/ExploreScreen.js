@@ -1,11 +1,12 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer, useContext} from 'react';
 import Header from '../components/Header';
 import {ScrollView, Text, View} from 'react-native';
 import {Chip, ProgressBar} from 'react-native-paper';
 import {httpRequest} from '../helpers/httpClient';
 import MovieList from '../components/MovieList';
 import * as Animatable from 'react-native-animatable';
-
+import {colors} from '../helpers/constants';
+import {AuthContext} from '../helpers/AuthContext';
 let genres = [
   {id: 28, name: 'Action', selected: true},
   {id: 12, name: 'Adventure', selected: false},
@@ -63,12 +64,14 @@ const reducer = (state, action) => {
       return state;
   }
 };
-const HomeScreen = ({navigation}) => {
+const ExploreScreen = ({navigation}) => {
   const [selectedGenre, setSelectedGenre] = useState('Action');
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const {watchList} = useContext(AuthContext);
 
   const API_URL = `https://moviefy.glitch.me/movie-info/genre/${state.genre}`;
   const fetchData = async () => {
@@ -81,6 +84,7 @@ const HomeScreen = ({navigation}) => {
           return {
             ...movie,
             poster_path: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+            inWatchlist: watchList.includes(movie.id),
           };
         });
       dispatch({type: 'DATA_FETCHED', movies});
@@ -92,6 +96,17 @@ const HomeScreen = ({navigation}) => {
   useEffect(() => {
     fetchData();
   }, [state.genre]);
+
+  useEffect(() => {
+    const newMovies = movies.map((movie) => {
+      return {
+        ...movie,
+        inWatchlist: watchList.includes(movie.id),
+      };
+    });
+    console.log('exploreScreen...watchList', watchList);
+    setMovies([]);
+  }, [watchList]);
 
   const handleSelection = (selectedGenre) => {
     genres = genres.map((genre) => {
@@ -107,7 +122,7 @@ const HomeScreen = ({navigation}) => {
     <>
       <Header title="Moviefy" navigation={navigation} />
       <View style={{flex: 1}}>
-        <Animatable.View animation="fadeInRight" delay={1000}>
+        <Animatable.View animation="fadeInRight" delay={500}>
           <ScrollView
             horizontal={true}
             style={{
@@ -125,7 +140,7 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 25,
                   flex: 1,
                   marginHorizontal: 3,
-                  backgroundColor: genre.selected ? '#1E35A9' : 'white',
+                  backgroundColor: genre.selected ? colors.primary : 'white',
                 }}
                 onPress={handleSelection.bind(null, genre)}>
                 {genre.name}
@@ -147,4 +162,4 @@ const HomeScreen = ({navigation}) => {
   );
 };
 
-export default HomeScreen;
+export default ExploreScreen;

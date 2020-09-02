@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {colors} from '../helpers/constants';
 
 const LoadingScreen = () => {
   return (
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#1E35A9',
+    backgroundColor: colors.primary,
   },
 });
 export default LoadingScreen;
